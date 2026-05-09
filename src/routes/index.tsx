@@ -5,6 +5,11 @@ import { GameShell } from "@/components/GameShell";
 import { StatsBar } from "@/components/HudBits";
 import { loadSave, Save, GameId } from "@/lib/game-store";
 import hero from "@/assets/hero.png";
+import heroLv50 from "@/assets/hero-lv50.png";
+import heroLv100 from "@/assets/hero-lv100.png";
+import heroLv150 from "@/assets/hero-lv150.png";
+import heroLv200 from "@/assets/hero-lv200.png";
+import heroLv300 from "@/assets/hero-lv300.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -31,10 +36,65 @@ const GAMES: GameDef[] = [
   { id: "star-catch", name: "Star Catcher", blurb: "Catch falling stars from the sky", to: "/play/star-catch", icon: Star,      hue: "from-amber-300 to-rose-400" },
 ];
 
+type HeroInfo = {
+  src: string;
+  name: string;
+  title: string;
+  glowColor: string;
+  gradientClass: string;
+};
+
+function getHeroByLevel(level: number): HeroInfo {
+  if (level >= 300) return {
+    src: heroLv300,
+    name: "Dragon Knight",
+    title: "Lv 300–500 · Legendary",
+    glowColor: "oklch(0.45 0.28 20 / 0.7)",
+    gradientClass: "from-red-600 to-yellow-500",
+  };
+  if (level >= 200) return {
+    src: heroLv200,
+    name: "Holy Paladin",
+    title: "Lv 200–299 · Divine",
+    glowColor: "oklch(0.85 0.18 90 / 0.7)",
+    gradientClass: "from-yellow-300 to-white",
+  };
+  if (level >= 150) return {
+    src: heroLv150,
+    name: "Thunder Archer",
+    title: "Lv 150–199 · Storm",
+    glowColor: "oklch(0.75 0.22 280 / 0.7)",
+    gradientClass: "from-purple-400 to-yellow-300",
+  };
+  if (level >= 100) return {
+    src: heroLv100,
+    name: "Ice Mage",
+    title: "Lv 100–149 · Frost",
+    glowColor: "oklch(0.7 0.18 220 / 0.7)",
+    gradientClass: "from-cyan-300 to-blue-500",
+  };
+  if (level >= 50) return {
+    src: heroLv50,
+    name: "Fire Warrior",
+    title: "Lv 50–99 · Blaze",
+    glowColor: "oklch(0.6 0.28 40 / 0.7)",
+    gradientClass: "from-orange-400 to-red-500",
+  };
+  return {
+    src: hero,
+    name: "Sword Bearer",
+    title: "Lv 1–49 · Beginner",
+    glowColor: "oklch(0.5 0.25 310 / 0.6)",
+    gradientClass: "from-fuchsia-400 to-violet-500",
+  };
+}
+
 function Index() {
   const [save, setSave] = useState<Save | null>(null);
   useEffect(() => { setSave(loadSave()); }, []);
   if (!save) return <GameShell />;
+
+  const heroInfo = getHeroByLevel(save.level);
 
   return (
     <GameShell>
@@ -48,13 +108,23 @@ function Index() {
         <div className="relative mx-auto mt-2 h-56 w-56">
           <div className="absolute inset-x-4 bottom-2 h-3 rounded-full bg-magic-gradient opacity-50 blur-md" />
           <img
-            src={hero}
-            alt="Hero"
+            key={heroInfo.name}
+            src={heroInfo.src}
+            alt={heroInfo.name}
             width={768}
             height={1024}
             className="relative h-full w-full object-contain animate-float"
-            style={{ filter: "drop-shadow(0 8px 24px oklch(0.5 0.25 310 / 0.6))" }}
+            style={{ filter: `drop-shadow(0 8px 24px ${heroInfo.glowColor})` }}
           />
+        </div>
+
+        <div className="mt-1 flex flex-col items-center gap-0.5">
+          <span className={`text-sm font-bold bg-gradient-to-r ${heroInfo.gradientClass} bg-clip-text text-transparent`}>
+            {heroInfo.name}
+          </span>
+          <span className="text-[10px] text-muted-foreground tracking-wider uppercase">
+            {heroInfo.title}
+          </span>
         </div>
       </section>
 

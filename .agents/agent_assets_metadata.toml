@@ -1,0 +1,32 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "GJeUYJgmL0jN3F4ZJ1lav"
+uri = "file://src/assets/hero-lv50.png"
+type = "image"
+title = "fire hero level 50"
+
+[[generated]]
+id = "r6tNY0Q4GpiHdI-QyEWMm"
+uri = "file://src/assets/hero-lv100.png"
+type = "image"
+title = "ice mage hero level 100"
+
+[[generated]]
+id = "TqatZM0gdD-7kVttRanTE"
+uri = "file://src/assets/hero-lv150.png"
+type = "image"
+title = "thunder archer hero level 150"
+
+[[generated]]
+id = "sFGSkuDtdqcWnpphMZa0w"
+uri = "file://src/assets/hero-lv200.png"
+type = "image"
+title = "holy paladin hero level 200"
+
+[[generated]]
+id = "v1eeABIx-Kq22CTbQ9DFy"
+uri = "file://src/assets/hero-lv300.png"
+type = "image"
+title = "dragon knight max hero level 300"
