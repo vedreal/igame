@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Sword, Sparkles, Star } from "lucide-react";
 import { GameShell } from "@/components/GameShell";
 import { StatsBar } from "@/components/HudBits";
 import { loadSave, Save, GameId } from "@/lib/game-store";
@@ -9,9 +10,6 @@ import heroLv100 from "@/assets/hero-lv100.png";
 import heroLv150 from "@/assets/hero-lv150.png";
 import heroLv200 from "@/assets/hero-lv200.png";
 import heroLv300 from "@/assets/hero-lv300.png";
-import iconTapSlime from "@/assets/icon-tap-slime.png";
-import iconRuneRush from "@/assets/icon-rune-rush.png";
-import iconStarCatch from "@/assets/icon-star-catch.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -28,14 +26,14 @@ type GameDef = {
   name: string;
   blurb: string;
   to: "/play/tap-slime" | "/play/rune-rush" | "/play/star-catch";
-  icon: string;
+  icon: typeof Sword;
   hue: string;
 };
 
 const GAMES: GameDef[] = [
-  { id: "tap-slime",  name: "Slime Strike",  blurb: "Tap fast, defeat the slimes!",       to: "/play/tap-slime",  icon: iconTapSlime,  hue: "from-fuchsia-500 to-violet-500" },
-  { id: "rune-rush",  name: "Rune Rush",     blurb: "Match the glowing rune in time",      to: "/play/rune-rush",  icon: iconRuneRush,  hue: "from-sky-400 to-indigo-500" },
-  { id: "star-catch", name: "Star Catcher",  blurb: "Catch falling stars from the sky",    to: "/play/star-catch", icon: iconStarCatch, hue: "from-amber-300 to-rose-400" },
+  { id: "tap-slime",  name: "Slime Strike", blurb: "Tap fast, defeat the slimes!", to: "/play/tap-slime",  icon: Sword,     hue: "from-fuchsia-500 to-violet-500" },
+  { id: "rune-rush",  name: "Rune Rush",    blurb: "Match the glowing rune in time", to: "/play/rune-rush",  icon: Sparkles,  hue: "from-sky-400 to-indigo-500" },
+  { id: "star-catch", name: "Star Catcher", blurb: "Catch falling stars from the sky", to: "/play/star-catch", icon: Star,      hue: "from-amber-300 to-rose-400" },
 ];
 
 type HeroInfo = {
@@ -131,33 +129,32 @@ function Index() {
       </section>
 
       <section className="flex flex-col gap-3 px-5 pb-8">
-        {GAMES.map((g, i) => (
-          <Link
-            key={g.id}
-            to={g.to}
-            className="group relative overflow-hidden rounded-3xl bg-card-magic glass-border p-4 shadow-magic transition active:scale-[0.98] animate-fade-up"
-            style={{ animationDelay: `${i * 80}ms`, animationFillMode: "backwards" }}
-          >
-            <div className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${g.hue} opacity-30 blur-2xl group-hover:opacity-50 transition`} />
-            <div className="relative flex items-center gap-3">
-              <div className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${g.hue} shadow-glow overflow-hidden`}>
-                <img
-                  src={g.icon}
-                  alt={g.name}
-                  className="h-12 w-12 object-contain"
-                />
+        {GAMES.map((g, i) => {
+          const Icon = g.icon;
+          return (
+            <Link
+              key={g.id}
+              to={g.to}
+              className="group relative overflow-hidden rounded-3xl bg-card-magic glass-border p-4 shadow-magic transition active:scale-[0.98] animate-fade-up"
+              style={{ animationDelay: `${i * 80}ms`, animationFillMode: "backwards" }}
+            >
+              <div className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${g.hue} opacity-30 blur-2xl group-hover:opacity-50 transition`} />
+              <div className="relative flex items-center gap-3">
+                <div className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${g.hue} shadow-glow`}>
+                  <Icon className="h-7 w-7 text-white" strokeWidth={2.5} />
+                </div>
+                <div className="flex-1 text-left">
+                  <div className="text-base font-bold">{g.name}</div>
+                  <div className="text-xs text-muted-foreground">{g.blurb}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Best</div>
+                  <div className="text-base font-bold text-gold-gradient">{save.best[g.id]}</div>
+                </div>
               </div>
-              <div className="flex-1 text-left">
-                <div className="text-base font-bold">{g.name}</div>
-                <div className="text-xs text-muted-foreground">{g.blurb}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Best</div>
-                <div className="text-base font-bold text-gold-gradient">{save.best[g.id]}</div>
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </section>
     </GameShell>
   );

@@ -30,21 +30,3 @@ id = "v1eeABIx-Kq22CTbQ9DFy"
 uri = "file://src/assets/hero-lv300.png"
 type = "image"
 title = "dragon knight max hero level 300"
-
-[[generated]]
-id = "1TBt4u1dzL9tM2Oq9G6UN"
-uri = "file://src/assets/icon-tap-slime.png"
-type = "image"
-title = "chibi slime icon tap slime game"
-
-[[generated]]
-id = "U8qCgVf0-dS_xhKfuXZ70"
-uri = "file://src/assets/icon-rune-rush.png"
-type = "image"
-title = "chibi magic rune icon rune rush game"
-
-[[generated]]
-id = "o8UMOpPaMkNFit-7AkxGX"
-uri = "file://src/assets/icon-star-catch.png"
-type = "image"
-title = "chibi star catcher icon star catch game"
