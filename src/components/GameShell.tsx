@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ReactNode } from "react";
 import { PixiBackground } from "./PixiBackground";
 
-export function GameShell({ children, title, back }: { children: ReactNode; title?: string; back?: boolean }) {
+export function GameShell({ children, title, back }: { children?: ReactNode; title?: string; back?: boolean }) {
   return (
     <main className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden">
       <PixiBackground />
