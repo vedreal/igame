@@ -48,16 +48,16 @@ function getHeroByLevel(level: number): HeroInfo {
   if (level >= 300) return {
     src: heroLv300,
     name: "Dragon Knight",
-    title: "Lv 300–500 · Legendary",
+    title: "Lv 300+ · Legendary",
     glowColor: "oklch(0.45 0.28 20 / 0.7)",
     gradientClass: "from-red-600 to-yellow-500",
   };
   if (level >= 200) return {
-    src: heroLv200,
-    name: "Holy Paladin",
-    title: "Lv 200–299 · Divine",
-    glowColor: "oklch(0.85 0.18 90 / 0.7)",
-    gradientClass: "from-yellow-300 to-white",
+    src: heroLv50,
+    name: "Fire Warrior",
+    title: "Lv 200–299 · Blaze",
+    glowColor: "oklch(0.6 0.28 40 / 0.7)",
+    gradientClass: "from-orange-400 to-red-500",
   };
   if (level >= 150) return {
     src: heroLv150,
@@ -74,11 +74,11 @@ function getHeroByLevel(level: number): HeroInfo {
     gradientClass: "from-cyan-300 to-blue-500",
   };
   if (level >= 50) return {
-    src: heroLv50,
-    name: "Fire Warrior",
-    title: "Lv 50–99 · Blaze",
-    glowColor: "oklch(0.6 0.28 40 / 0.7)",
-    gradientClass: "from-orange-400 to-red-500",
+    src: heroLv200,
+    name: "Holy Paladin",
+    title: "Lv 50–99 · Divine",
+    glowColor: "oklch(0.85 0.18 90 / 0.7)",
+    gradientClass: "from-yellow-300 to-white",
   };
   return {
     src: hero,
