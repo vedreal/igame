@@ -10,33 +10,68 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PlayTapSlimeRouteImport } from './routes/play.tap-slime'
+import { Route as PlayStarCatchRouteImport } from './routes/play.star-catch'
+import { Route as PlayRuneRushRouteImport } from './routes/play.rune-rush'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlayTapSlimeRoute = PlayTapSlimeRouteImport.update({
+  id: '/play/tap-slime',
+  path: '/play/tap-slime',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlayStarCatchRoute = PlayStarCatchRouteImport.update({
+  id: '/play/star-catch',
+  path: '/play/star-catch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlayRuneRushRoute = PlayRuneRushRouteImport.update({
+  id: '/play/rune-rush',
+  path: '/play/rune-rush',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/play/rune-rush': typeof PlayRuneRushRoute
+  '/play/star-catch': typeof PlayStarCatchRoute
+  '/play/tap-slime': typeof PlayTapSlimeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/play/rune-rush': typeof PlayRuneRushRoute
+  '/play/star-catch': typeof PlayStarCatchRoute
+  '/play/tap-slime': typeof PlayTapSlimeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/play/rune-rush': typeof PlayRuneRushRoute
+  '/play/star-catch': typeof PlayStarCatchRoute
+  '/play/tap-slime': typeof PlayTapSlimeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/play/rune-rush' | '/play/star-catch' | '/play/tap-slime'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/play/rune-rush' | '/play/star-catch' | '/play/tap-slime'
+  id:
+    | '__root__'
+    | '/'
+    | '/play/rune-rush'
+    | '/play/star-catch'
+    | '/play/tap-slime'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PlayRuneRushRoute: typeof PlayRuneRushRoute
+  PlayStarCatchRoute: typeof PlayStarCatchRoute
+  PlayTapSlimeRoute: typeof PlayTapSlimeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +83,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/play/tap-slime': {
+      id: '/play/tap-slime'
+      path: '/play/tap-slime'
+      fullPath: '/play/tap-slime'
+      preLoaderRoute: typeof PlayTapSlimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/play/star-catch': {
+      id: '/play/star-catch'
+      path: '/play/star-catch'
+      fullPath: '/play/star-catch'
+      preLoaderRoute: typeof PlayStarCatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/play/rune-rush': {
+      id: '/play/rune-rush'
+      path: '/play/rune-rush'
+      fullPath: '/play/rune-rush'
+      preLoaderRoute: typeof PlayRuneRushRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PlayRuneRushRoute: PlayRuneRushRoute,
+  PlayStarCatchRoute: PlayStarCatchRoute,
+  PlayTapSlimeRoute: PlayTapSlimeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
